@@ -14,7 +14,7 @@ public class MainMenu extends JFrame{
 	private String nickname;
 	
 	public MainMenu() {
-		super("채팅프로그램");
+		setTitle("채팅프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container c = getContentPane();
 
@@ -23,6 +23,7 @@ public class MainMenu extends JFrame{
 		endToEnd= new JButton("끝말잇기");
 		
 		c.setLayout(null);
+		
 		nickLabel.setLocation(100, 70);
 		nickLabel.setSize(200,20);
 		chat1To1.setSize(200, 100);
@@ -35,8 +36,7 @@ public class MainMenu extends JFrame{
 		chat1To1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String IPAddress = JOptionPane.showInputDialog("IP주소를 입력해주세요.");
-				Chat1To1 chat1 = new Chat1To1();
+				SelectChat1To1 chat1 = new SelectChat1To1(nickname);
 				chat1.setVisible(true);
 			}
 		});
@@ -48,6 +48,7 @@ public class MainMenu extends JFrame{
 				chat2.setVisible(true);
 			}
 		});
+		
 		endToEnd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

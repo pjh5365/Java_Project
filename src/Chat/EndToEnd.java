@@ -8,12 +8,14 @@ public class EndToEnd extends JDialog{
 	private JTextField inputField = new JTextField();	//전송을 위한 영역
 	private JButton sendBtn = new JButton("전송");
 	
+	private JScrollPane outputText;	//스크롤 고정을 위해 바깥에서 선언
+	
 	public EndToEnd() {
 		setTitle("끝말잇기");
 		setLayout(new BorderLayout());
 		
 		outputArea.setEditable(false);	//출력만 하므로 수정불가능하게 만들기
-		JScrollPane outputText = new JScrollPane(outputArea);
+		outputText = new JScrollPane(outputArea);
 		outputText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);	//스크롤 고정
 		
 		JPanel sendText = new JPanel();
