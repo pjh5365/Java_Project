@@ -3,7 +3,7 @@ package Chat;
 import javax.swing.*;
 import java.awt.*;
 
-public class Chat1ToN extends JDialog {
+public class Chat1ToN extends JFrame {
 	private JTextArea outputArea = new JTextArea();	//내용이 들어갈 영역
 	private JTextField inputField = new JTextField();	//전송을 위한 영역
 	private JButton sendBtn = new JButton("전송");

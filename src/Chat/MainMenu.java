@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MainMenu extends JFrame{
+public class MainMenu extends JFrame{	//메인화면이 그려지는 클래
 	private	JButton chat1To1;	//1대1 채팅버튼
 	private JButton chat1ToN;	//그룹 채팅버튼
 	private JButton endToEnd;	//끝말잇기 버튼
@@ -16,6 +16,7 @@ public class MainMenu extends JFrame{
 	public MainMenu() {
 		setTitle("채팅프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		Container c = getContentPane();
 
 		chat1To1 = new JButton("1:1 채팅");
@@ -36,7 +37,7 @@ public class MainMenu extends JFrame{
 		chat1To1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SelectChat1To1 chat1 = new SelectChat1To1(nickname);
+				Chat1To1 chat1 = new Chat1To1(nickname, "1:1 채팅");
 				chat1.setVisible(true);
 			}
 		});
@@ -52,7 +53,7 @@ public class MainMenu extends JFrame{
 		endToEnd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				EndToEnd endtoend = new EndToEnd();	//끝말잇기가 실행되는 부분
+				EndToEnd endtoend = new EndToEnd("끝말잇기");		//끝말잇기가 실행되는 부분
 				endtoend.setVisible(true);
 			}
 		});
