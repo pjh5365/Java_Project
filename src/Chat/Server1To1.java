@@ -85,6 +85,7 @@ public class Server1To1 extends JFrame {	//1:1채팅 서버를 위한 클래스
 		public void actionPerformed(ActionEvent e) {
 			String sendMessage = inputField.getText();	//전송할 내용을 받을 문자열
 			try {
+				writer.write(name + "\n");	//반대측에 사용할 닉네임을 넘겨줌
 				writer.write(sendMessage + "\n");	//\n이 없으면 바로 넘어가지 않고 창이 닫혀야 넘어감
 				writer.flush();
 				outputArea.append("[" + name + "] : " + sendMessage + "\n");

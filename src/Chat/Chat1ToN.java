@@ -2,32 +2,52 @@ package Chat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class Chat1ToN extends JFrame {
-	private JTextArea outputArea = new JTextArea();	//내용이 들어갈 영역
-	private JTextField inputField = new JTextField();	//전송을 위한 영역
-	private JButton sendBtn = new JButton("전송");
+	private JButton openServer;
+	private JButton joinServer;
 	
-	private JScrollPane outputText;	//스크롤 고정을 위해 바깥에서 선언
+	private String IPAddress;
+	private String nickname;
 	
-	public Chat1ToN() {
-		setTitle("그룹채팅");
-		setLayout(new BorderLayout());
-		
-		outputArea.setEditable(false);	//출력만 하므로 수정불가능하게 만들기
-		outputText = new JScrollPane(outputArea);
-		outputText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);	//스크롤 고정
-		
-		JPanel sendText = new JPanel();
-		
-		sendText.setLayout(new BorderLayout());
-		
-		sendText.add(inputField, BorderLayout.CENTER);
-		sendText.add(sendBtn, BorderLayout.EAST);
-		
+	public Chat1ToN(String nickname, String title) {	//그룹 채팅 생성자
+		setTitle(title);
 		Container c = getContentPane();
-		c.add(outputText, BorderLayout.CENTER);
-		c.add(sendText, BorderLayout.SOUTH);
+		c.setLayout(null);
+		
+		this.nickname = nickname;
+		
+		openServer = new JButton("서버 열기");
+		joinServer = new JButton("서버 입장");
+		
+		openServer.setSize(200, 100);
+		openServer.setLocation(100, 100);
+		joinServer.setSize(200, 100);
+		joinServer.setLocation(100, 200);
+		
+		openServer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Server1ToN ServerThread = new Server1ToN(title);
+				Thread thread1 = new Thread(ServerThread);
+				thread1.start();
+			}
+		});
+	
+		joinServer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nickname = JOptionPane.showInputDialog("채팅방에서 사용할 이름을 입력하세요.");
+				IPAddress = JOptionPane.showInputDialog("접속할 서버의 IP를 입력하세요.");
+				Client1ToN ClientThread = new Client1ToN(IPAddress, nickname, title);
+				Thread thread2 = new Thread(ClientThread);
+				thread2.start();
+			}
+		});
+		
+		c.add(openServer);
+		c.add(joinServer);
 		
 		setSize(400, 500);
 	}

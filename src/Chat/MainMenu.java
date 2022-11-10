@@ -45,7 +45,7 @@ public class MainMenu extends JFrame{	//메인화면이 그려지는 클래
 		chat1ToN.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Chat1ToN chat2 = new Chat1ToN();	//그룹채팅이 실행되는 부분
+				Chat1ToN chat2 = new Chat1ToN(nickname, "그룹 채팅");	//그룹채팅이 실행되는 부분
 				chat2.setVisible(true);
 			}
 		});

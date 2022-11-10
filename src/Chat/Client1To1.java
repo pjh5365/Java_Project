@@ -56,6 +56,37 @@ public class Client1To1 extends JFrame {	//1:1채팅을 위한 클라이언트 �
 		setVisible(true);
 	}
 	
+	public Client1To1(String IPAddress, String nickname, String title, int i) {	//그룹채팅 생성자 IP주소와 닉네임과 타이틀을 넘겨받음
+		setTitle(title);
+		setLayout(new BorderLayout());
+		
+		this.IPAddress = IPAddress;	//IP주소를 입력받아 서버에 연결하기 위해
+		this.nickname = nickname;	//닉네임을 받아 표시하기 위해
+		
+		outputArea.setEditable(false);	//출력만 하므로 수정불가능하게 만들기
+		outputText = new JScrollPane(outputArea);	//채팅내역을 보여줄 스크롤팬
+		outputText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);	//옆쪽에 항상 스크롤바가 보임
+		
+		sendActionListenerGroupChat sALG = new sendActionListenerGroupChat();
+		
+		inputField.addActionListener(sALG);	//엔터를 입력받을떄 실행
+		sendBtn.addActionListener(sALG);	//버튼을 클릭했을때 실행
+		
+		JPanel sendText = new JPanel();	
+		
+		sendText.setLayout(new BorderLayout());
+		
+		sendText.add(inputField, BorderLayout.CENTER);
+		sendText.add(sendBtn, BorderLayout.EAST);
+		
+		Container c = getContentPane();
+		c.add(outputText, BorderLayout.CENTER);
+		c.add(sendText, BorderLayout.SOUTH);
+		
+		setSize(400, 500);
+		setVisible(true);
+	}
+	
 	public Client1To1(String IPAddress, String title) {	//끝말잇기 채팅생성자 IP주소와 타이틀을 넘겨받음
 		setTitle(title);
 		setLayout(new BorderLayout());
@@ -91,10 +122,29 @@ public class Client1To1 extends JFrame {	//1:1채팅을 위한 클라이언트 �
 		public void actionPerformed(ActionEvent e) {
 			String sendMessage = inputField.getText();	//전송할 내용을 받을 문자열
 			try {
+				writer.write(nickname + "\n");	//반대측에 사용할 닉네임을 넘겨줌
 				writer.write(sendMessage + "\n");	//\n이 없으면 바로 넘어가지 않고 창이 닫혀야 넘어감
 				writer.flush();
 				outputArea.append("[" + nickname + "] : " + sendMessage + "\n");
 				outputText.getVerticalScrollBar().setValue(outputText.getVerticalScrollBar().getMaximum());	//자동스크롤
+				inputField.setText("");
+				} catch(IOException e1) {
+					System.out.println("전송중오류발생");
+				}
+			
+		}
+	}
+	
+	class sendActionListenerGroupChat implements ActionListener {	//그룹채팅 액션이벤트 (버튼과 엔터둘다 이용해 이벤트 처리를 하기위해 따로생성)
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String sendMessage = inputField.getText();	//전송할 내용을 받을 문자열
+			try {
+				writer.write(nickname + "\n");	//반대측에 사용할 닉네임을 넘겨줌
+				writer.write(sendMessage + "\n");	//\n이 없으면 바로 넘어가지 않고 창이 닫혀야 넘어감
+				writer.flush();
+//				outputArea.append("[" + nickname + "] : " + sendMessage + "\n");
+//				outputText.getVerticalScrollBar().setValue(outputText.getVerticalScrollBar().getMaximum());	//자동스크롤
 				inputField.setText("");
 				} catch(IOException e1) {
 					System.out.println("전송중오류발생");
