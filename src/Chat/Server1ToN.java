@@ -2,11 +2,11 @@ package Chat;
 
 import java.net.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.*;
 
 public class Server1ToN extends JFrame implements Runnable {
@@ -15,8 +15,11 @@ public class Server1ToN extends JFrame implements Runnable {
 	protected JScrollPane outputText;	//자동스크롤을 사용하기위해 바깥쪽에 생성
 	protected ServerSocket server = null;	//서버를 열기위한 서버소켓
 	protected Socket client = null;	//클라이언트와 채팅을 하기위한 클라이언트소켓
+	private BufferedWriter writer = null;	//클라이언트로 보낼 문자열을 저장할 스트림
 	
 	private ArrayList <Socket> clientList = new ArrayList<Socket>();
+	private ArrayList <BufferedWriter> writerList = new ArrayList<BufferedWriter>();
+	private HashMap <Socket, BufferedWriter> hashmap = new HashMap <Socket, BufferedWriter>();	//쓰레드에서 돌아가는 값을 알아내기 위해 사용
 
 	public Server1ToN(String title) {
 		setTitle(title);
@@ -54,8 +57,11 @@ public class Server1ToN extends JFrame implements Runnable {
 			while(true) {
 				client = server.accept();
 				clientList.add(client);
+				writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));	//쓰레드마다 writer생성
+				writerList.add(writer);
+				hashmap.put(client, writer);
 				
-				ServerThread serverThread = new ServerThread(outputText, outputArea, client, clientList);
+				ServerThread serverThread = new ServerThread(outputText, outputArea, client, clientList, writerList, hashmap);
 				Thread Thread1 = new Thread(serverThread);
 				Thread1.start();
 			}
