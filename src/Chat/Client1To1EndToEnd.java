@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
 
-public class Client1To1EndToEnd extends Client1To1 implements Runnable {	//메인메소드에서만 실행하면 스레드가 필요없는데 따로 이동한다음 실행할려면 스레드가 필요한듯
+public class Client1To1EndToEnd extends Client1To1 implements Runnable {	//서버랑 클라이언트랑 같은 프로그램에서 여는 경우도 있기때문에 쓰레드가 필요함
 	private String readMessage;
 	
 	public Client1To1EndToEnd(String IPAddress, String title) {

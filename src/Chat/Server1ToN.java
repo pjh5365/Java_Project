@@ -22,7 +22,7 @@ public class Server1ToN extends JFrame implements Runnable {
 	private HashMap <Socket, BufferedWriter> hashmap = new HashMap <Socket, BufferedWriter>();	//쓰레드에서 돌아가는 값을 알아내기 위해 사용
 
 	public Server1ToN(String title) {
-		setTitle(title);
+		setTitle(title + " 서버");	//클라이언트 창과 구분하기 위해 서버추가
 		setLayout(new BorderLayout());
 		
 		outputArea.setEditable(false);	//출력만 하므로 수정불가능하게 만들기
@@ -32,7 +32,7 @@ public class Server1ToN extends JFrame implements Runnable {
 		Container c = getContentPane();
 		c.add(outputText, BorderLayout.CENTER);
 		
-		setSize(400, 500);
+		setSize(400, 300);	//사이즈 일반 클라이언트와 같을 필요 없으니 줄임
 		setVisible(true);
 		
 		this.addWindowListener(new WindowAdapter() {	//창닫았을때 반대쪽에 종료했다는것을 알리기 위해
