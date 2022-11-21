@@ -130,7 +130,7 @@ public class Client1To1EndToEnd extends JFrame implements Runnable {	//원래 Cl
 			tmp = readApi.readLine();
 			result = tmp + "\n";
 			
-			if(tmp == null) {
+			if(tmp == null) {	//api를 읽을 수 없을때
 				writer.write("상대측에서 검색할 수 없는 단어 [" + word + "]를 입력하였습니다.\n");	//\n이 없으면 바로 넘어가지 않고 창이 닫혀야 넘어감
 				writer.flush();
 				outputArea.append("[" + word + "] 사전에서 검색할 수 없는 단어입니다.\n");
@@ -138,7 +138,7 @@ public class Client1To1EndToEnd extends JFrame implements Runnable {	//원래 Cl
 				inputField.setText("");
 			}
 			
-			while(true) {	//api를 읽을 수 없을때
+			while(true) {
 				tmp = readApi.readLine();
 				if(tmp == null)
 					break;
