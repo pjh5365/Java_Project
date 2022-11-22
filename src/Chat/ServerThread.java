@@ -14,8 +14,8 @@ public class ServerThread extends JFrame implements Runnable {
 	private Socket client;
 
 	private ArrayList <Socket> clientList = null;
-	private ArrayList <BufferedWriter> writerList = new ArrayList<BufferedWriter>();	//클라이언트 각각에 따로 문자열을 보내주기위해
-	private HashMap <Socket, BufferedWriter> hashmap = new HashMap <Socket, BufferedWriter>();	//쓰레드에서 돌아가는 값을 알아내기 위해 사용 
+	private ArrayList <BufferedWriter> writerList = null;	//클라이언트 각각에 따로 문자열을 보내주기위해
+	private HashMap <Socket, BufferedWriter> hashmap = null;	//쓰레드에서 돌아가는 값을 알아내기 위해 사용 
 	
 	private BufferedReader reader = null;	//클라이언트에서 문자열을 받아올 스트림 어차피 다들 서버로 보내니까 따로 리스트 할 필요 없을듯 
 	private BufferedWriter writer = null;	//클라이언트로 보낼 문자열을 저장할 스트림
@@ -60,7 +60,7 @@ public class ServerThread extends JFrame implements Runnable {
 				name = reader.readLine();
 				readMessage = reader.readLine();
 				
-				if(readMessage == null) {	//접속안하고 나갔을때를 대비해서 2번 사용	
+				if(readMessage == null) {
 					writer = hashmap.get(client);	//삭제할 현재 writer를 지금 클라이언트키로 해쉬맵에서 받아옴
 					hashmap.remove(client);
 					writerList.remove(writer);
